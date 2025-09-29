@@ -1,0 +1,11 @@
+[package]
+name = "aegis-cli"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = "4.4", features = ["derive"] }
+regex = "1.10"
+ignore = "0.4"
+anyhow = "1.0"
+thiserror = "1.0"
