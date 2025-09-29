@@ -82,6 +82,7 @@ aegis install-hook
 Now every git commit will automatically run Aegis and block commits containing potential secrets.
 
 **Example Output**
+
 When Aegis finds a potential secret:
 
 `Error: Potential secret found in config.yaml:15 - AWS Access Key ID`
