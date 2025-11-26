@@ -63,7 +63,7 @@ echo "api_key=sk_live_1234567890abcdef" >> test.txt
 The scanner should detect all secrets with confidence scores and exit with an error code.
 
 ## 🚀 Usage
-## Basic Scanning
+### Basic Scanning
 ```bash
 # Scan current directory
 aegis scan
@@ -81,7 +81,7 @@ aegis scan --staged
 aegis scan --format json
 ```
 
-## Git Integration
+### Git Integration
 Set up Aegis as a pre-commit hook in your repository:
 
 ```bash
@@ -93,7 +93,7 @@ aegis install-hook
 ```
 Now every `git commit` will automatically run Aegis and block commits containing potential secrets.
 
-## Other Commands
+### Other Commands
 ```bash
 # Show current configuration
 aegis config
@@ -178,10 +178,11 @@ Configuration file locations (in order of precedence):
 * And 8+ additional common secret types
 
 ## 🎯 Performance
-Metric	Target	Achieved
-Scan Time (1000 files)	< 3s	2.1s
-False Positive Rate	< 5%	3.8%
-Memory Usage	< 50MB	~8MB
+| Metric | Target | Achieved |
+|--------|--------|----------|
+| Scan Time (1000 files) | < 3s | **2.1s** |
+| False Positive Rate | < 5% | **3.8%** |
+| Memory Usage | < 50MB | **~8MB** |
 
 ## 🔮 Roadmap
 * **IDE Integration:** Real-time scanning in VS Code
