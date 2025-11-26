@@ -42,11 +42,10 @@ cd aegis-cli
 cargo build --release
 
 # The compiled binary will be available at `./target/release/aegis`
-```
 
-## Install Globally (Optional)
-```bash
+# Install Globally (Optional)
 cargo install --path .
+
 # Now you can use `aegis` from anywhere
 ```
 
