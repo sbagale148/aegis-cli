@@ -1,0 +1,39 @@
+Project Proposal: Aegis 
+Aegis stops secrets at the commit line. It’s a two-part system: a local Rust CLI that scans code before it’s committed, and 
+a cloud dashboard that gives security teams a view of what’s almost been leaked. 
+The Problem: Invisible Accidents 
+A developer’s focus is on building features, but a single accidental commit of a config file can expose API keys or tokens. 
+Existing scanners often run too late, in CI pipelines, leaving a window of exposure. This creates a reactive, stressful 
+security posture. For organizations, the lack of a centralized view means they can’t measure exposure or see if preventive 
+measures are working. 
+Technical Approach: Local Speed, Global Visibility 
+The solution is a two-part system built for minimal friction and maximum insight. 
+The first part is the CLI, built in Rust for performance. It integrates as a pre-commit hook. Its job is to be fast and 
+accurate. It scans staged files using optimized regular expressions for common secret patterns (e.g., AWS keys, Slack 
+tokens). To reduce false positives, it performs Shannon entropy analysis to detect the randomness of cryptographic 
+material. A successful scan is near-instantaneous; a failed one provides clear feedback in the terminal, stopping the 
+commit. 
+When a scan completes, the CLI sends a small, secure payload—not the secret, but a metadata receipt—to a RESTful API. 
+This API is the gateway to the dashboard. The backend, built with FastAPI, receives these events, validates them, and 
+stores them in PostgreSQL. The frontend is a Next.js app on Vercel. It provides a clean interface for viewing trends: 
+which projects have the most blocked commits and what types of secrets are most commonly caught. 
+Deliverables & Milestones 
+• Weeks 1-3: Rust CLI core. Regex scanning, pre-commit hook integration, unit tests. 
+• Weeks 4-5: CLI enhancement. Entropy analysis and HTTP event reporting. 
+• Weeks 6-8: Backend foundation. FastAPI server with POST endpoint and database schema. 
+• Weeks 9-11: Dashboard MVP. Next.js frontend with login and a table for scan history. 
+• Weeks 12-14: Polish & deployment. Full deployment to Railway and Vercel. End-to-end testing. 
+Evaluation Plan 
+Success is measured by concrete metrics: 
+• Performance: CLI adds <500ms to the pre-commit process. 
+• Accuracy: Scanner achieves a <5% false positive rate on a 500-file test suite. 
+• Reliability: API successfully receives 99.9% of test events in a 24-hour stress test. 
+• Usability: Final demo shows a commit being blocked and the event appearing in the live dashboard. 
+Risks & Mitigations 
+• Risk: Entropy analysis generating false positives. 
+o Mitigation: Implement a confidence scoring system and configurable rules. 
+• Risk: Network latency frustrating developers. 
+o Mitigation: Make the HTTP call asynchronous and non-blocking. 
+Appendix 
+Tech Stack: Rust (clap, regex, reqwest), Python (FastAPI), PostgreSQL, Next.js, Vercel, Railway. 
+Resources: Cloud PostgreSQL instance (Neon.tech), GitHub repo.
