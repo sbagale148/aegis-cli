@@ -19,9 +19,8 @@ impl GitRepo {
 
         // Get all files from the index (staged files)
         for entry in index.iter() {
-            if let Some(path_bytes) = entry.path {
-                let path_str = std::str::from_utf8(path_bytes)
-                    .context("Invalid path in index")?;
+            let path_bytes = entry.path;
+            if let Ok(path_str) = std::str::from_utf8(&path_bytes) {
                 let full_path = workdir.join(path_str);
                 
                 // Only add if file exists
