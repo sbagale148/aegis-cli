@@ -83,9 +83,14 @@ async fn main() -> Result<()> {
             let mut findings: Vec<ScanResult> = Vec::new();
 
             for file_path in &staged_files {
-                if let Ok(content) = fs::read_to_string(file_path) {
-                    let file_findings = scanner.scan_file(&content, file_path);
-                    findings.extend(file_findings);
+                match fs::read_to_string(file_path) {
+                    Ok(content) => {
+                        let file_findings = scanner.scan_file(&content, file_path);
+                        findings.extend(file_findings);
+                    }
+                    Err(e) => {
+                        eprintln!("Warning: Failed to read file {}: {}", file_path.display(), e);
+                    }
                 }
             }
 
@@ -110,7 +115,6 @@ async fn main() -> Result<()> {
             // Report to API if configured
             if !no_report {
                 if let Some(url) = api_url {
-                    let api_client = ApiClient::new(&url);
                     let project_name = repo.get_project_name().unwrap_or_else(|_| "unknown".to_string());
                     
                     // Report all events asynchronously (fire and forget)
