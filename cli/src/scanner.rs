@@ -1,7 +1,6 @@
 use crate::entropy::calculate_shannon_entropy;
 use crate::ScanResult;
 use regex::Regex;
-use std::collections::HashMap;
 use std::path::Path;
 
 pub struct Scanner {
@@ -117,7 +116,7 @@ impl Scanner {
     }
 
     fn calculate_confidence(&self, secret_type: &str, entropy: f64, length: usize) -> f64 {
-        let mut confidence = 0.5; // Base confidence
+        let mut confidence: f64 = 0.5; // Base confidence
 
         // Adjust based on entropy
         if entropy > 4.0 {
