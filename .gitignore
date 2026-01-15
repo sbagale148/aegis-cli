@@ -24,8 +24,10 @@ out/
 
 # Rust
 /target/
+target/
 **/*.rs.bk
 *.pdb
+Cargo.lock
 
 # IDEs
 .vscode/
