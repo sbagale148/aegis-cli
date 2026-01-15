@@ -85,7 +85,8 @@ async def create_scan_event(
     try:
         # Parse timestamp
         event_timestamp = datetime.fromisoformat(event.timestamp.replace('Z', '+00:00'))
-    except Exception:
+    except (ValueError, AttributeError):
+        # Fallback to current time if timestamp parsing fails
         event_timestamp = datetime.utcnow()
 
     db_event = ScanEventModel(
